@@ -77,6 +77,7 @@ namespace VerzamelingFinished.Controllers
             if (card == null)
             {
                 return NotFound();
+
             }
             return View(card);
         }

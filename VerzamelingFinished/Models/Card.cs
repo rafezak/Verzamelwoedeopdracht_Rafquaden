@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace VerzamelingFinished.Models
+namespace VerzamelingFinished.Models;
 
-{
+
     public class Card
     {
         
@@ -17,10 +17,13 @@ namespace VerzamelingFinished.Models
         public int Quantity { get; set; }
 
 
-        
+
+        public int DeckId { get; set; }
+
+        public Deck Deck { get; set; }
+
+
+
+
     }
-
-
-
-}
 

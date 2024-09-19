@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VerzamelingFinished;
 
@@ -10,9 +11,11 @@ using VerzamelingFinished;
 namespace VerzamelingFinished.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    partial class DBcontextModelSnapshot : ModelSnapshot
+    [Migration("20240919113639_addd")]
+    partial class addd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

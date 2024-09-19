@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VerzamelingFinished;
 
@@ -10,9 +11,11 @@ using VerzamelingFinished;
 namespace VerzamelingFinished.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    partial class DBcontextModelSnapshot : ModelSnapshot
+    [Migration("20240919110525_adddataaa")]
+    partial class adddataaa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,18 +58,38 @@ namespace VerzamelingFinished.Migrations
 
                     b.HasIndex("DeckId");
 
-                    b.ToTable("cards");
+                    b.ToTable("Cards", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            DeckId = 0,
-                            Description = "An electric-type Pokémon",
-                            Element = "Electric",
-                            Name = "Pikachu",
+                            DeckId = 1,
+                            Description = "Description 1",
+                            Element = "Element 1",
+                            Name = "Card 1",
                             Price = 10,
-                            Quantity = 1
+                            Quantity = 5
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DeckId = 1,
+                            Description = "Description 2",
+                            Element = "Element 2",
+                            Name = "Card 2",
+                            Price = 20,
+                            Quantity = 10
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DeckId = 2,
+                            Description = "Description 3",
+                            Element = "Element 3",
+                            Name = "Card 3",
+                            Price = 30,
+                            Quantity = 15
                         });
                 });
 
@@ -92,15 +115,22 @@ namespace VerzamelingFinished.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("decks");
+                    b.ToTable("Decks", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Description = "A deck full of electric-type Pokémon",
-                            Image = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2Felectric-energy-card-vector-symbol-by-biochao-on-deviantart--635852041162050260%2F&psig=AOvVaw1VhoMWHjxJd-1TAgrQrnv9&ust=1726831793197000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCICN3vLzzogDFQAAAAAdAAAAABAJ",
-                            Name = "Electric Deck"
+                            Description = "Description 1",
+                            Image = "Image 1",
+                            Name = "Deck 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Description 2",
+                            Image = "Image 2",
+                            Name = "Deck 2"
                         });
                 });
 

@@ -9,6 +9,8 @@ namespace VerzamelingFinished
     {
         DbSet<Card> cards { get; set; }
 
+        DbSet<Deck> decks { get; set; }
+
         DatabaseFacade Database { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VerzamelingFinished;
 
@@ -10,9 +11,11 @@ using VerzamelingFinished;
 namespace VerzamelingFinished.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    partial class DBcontextModelSnapshot : ModelSnapshot
+    [Migration("20240919092708_VerzamelingFinishes")]
+    partial class VerzamelingFinishes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,8 +45,7 @@ namespace VerzamelingFinished.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -98,9 +100,9 @@ namespace VerzamelingFinished.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "A deck full of electric-type Pokémon",
-                            Image = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2Felectric-energy-card-vector-symbol-by-biochao-on-deviantart--635852041162050260%2F&psig=AOvVaw1VhoMWHjxJd-1TAgrQrnv9&ust=1726831793197000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCICN3vLzzogDFQAAAAAdAAAAABAJ",
-                            Name = "Electric Deck"
+                            Description = "This is a deck for fire-type pokémon",
+                            Image = "https://www.google.com/imgres?q=fire%20type%20pokemon&imgurl=https%3A%2F%2Fwww.giantbomb.com%2Fa%2Fuploads%2Fscale_medium%2F16%2F164924%2F3083931-8746743194-flat%252C.jpg&imgrefurl=https%3A%2F%2Fwww.giantbomb.com%2Ffire-type-pokemon%2F3015-9335%2Fconcepts%2F&docid=WLY_uPa4-K5oGM&tbnid=kS_yRrWBHuHJCM&vet=12ahUKEwiT3ZbF0s6IAxWJygIHHRW-CAUQM3oECGQQAA..i&w=960&h=960&hcb=2&ved=2ahUKEwiT3ZbF0s6IAxWJygIHHRW-CAUQM3oECGQQAA",
+                            Name = "Fire-Types"
                         });
                 });
 
