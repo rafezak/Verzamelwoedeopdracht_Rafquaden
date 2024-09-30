@@ -71,10 +71,11 @@
                         <h5 class="card-title"><span style="color: white; text-shadow: 1px 1px 2px black; ">@Html.DisplayFor(modelItem => item.Name)</span></h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text"><span style="opacity: 1; color: white; text-shadow: 1px 2px 2px black;">@Html.DisplayFor(modelItem => item.Description)</span></p>
+                       
                         <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Element: @Html.DisplayFor(modelItem => item.Element)</span></p>
                         <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Price: @Html.DisplayFor(modelItem => item.Price)</span></p>
                         <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Quantity: @Html.DisplayFor(modelItem => item.Quantity)</span></p>
+                            <p class="card-text"><span style="opacity: 1; color: white; text-shadow: 1px 2px 2px black;">Click for details</span></p>
                     </div>
                     <div class="card-footer">
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

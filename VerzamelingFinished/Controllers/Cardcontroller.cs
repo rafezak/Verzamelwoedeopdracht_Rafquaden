@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Update;
 using System.Reflection.Metadata.Ecma335;
 using VerzamelingFinished.Models;
+using VerzamelingFinished.Services;
 
 
 
@@ -16,6 +17,7 @@ namespace VerzamelingFinished.Controllers
     {
 
         private readonly DBcontext _context;
+        private readonly Pokeservice _pokeservice;
 
     public Cardcontroller(DBcontext context)
     {
@@ -53,12 +55,30 @@ namespace VerzamelingFinished.Controllers
             return View(card);
         }
 
+        public async Task<IActionResult> GetCoins(string name)
+        {
+            var pokemon = await _pokeservice.GetPokemonByName(name);
+            if (pokemon != null)
+            {
+                return View("ShowPokemon", pokemon);
+            }
+            return View("Error");
+
+        }
+
+
+        public IActionResult SearchPokemon()
+        {
+            return View();
+        }
+
 
         public IActionResult Read()
         {
             var cards = _context.cards.ToList();
             return View(cards);
         }
+
 
         public IActionResult Delete(int id)
         {

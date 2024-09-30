@@ -1,12 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-namespace VerzamelingFinished.Models
-
+﻿namespace VerzamelingFinished.Models
 {
-    public class Card
+    public class Pokemon
     {
-        
 
-        public int Id { get; set; }
+        public int id { get; set; }
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -16,13 +13,7 @@ namespace VerzamelingFinished.Models
 
         public int Quantity { get; set; }
 
-       
-
-
-
+        public string image { get; set; }
+            
     }
-
-
-
 }
-

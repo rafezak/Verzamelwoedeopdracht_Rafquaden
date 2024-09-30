@@ -1,18 +1,24 @@
 using Microsoft.EntityFrameworkCore;
 using VerzamelingFinished;
+using VerzamelingFinished.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient<Pokeservice>();
 builder.Services.AddDbContext<IDBcontext, DBcontext>(options =>
 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DBcontext")));
 
 
 
+builder.Services.AddScoped<Pokeservice>();
 
 var app = builder.Build();
+
+
+
 
 using (var scope = app.Services.CreateScope())
 {
