@@ -29,6 +29,8 @@ namespace VerzamelingFinished.Controllers
             return View(cards);
         }
 
+
+
         [HttpGet]
         public IActionResult Create()
         {

@@ -8,7 +8,7 @@ namespace VerzamelingFinished
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connection = "Data Source=.;Initial Catalog=Verzamelwoede;Integrated Security=True;Trust Server Certificate=True;";
+            string connection = "Data Source=.;Initial Catalog=Pokemoncards;Integrated Security=True;Trust Server Certificate=True;";
             optionsBuilder.UseSqlServer(connection);
         }
 
