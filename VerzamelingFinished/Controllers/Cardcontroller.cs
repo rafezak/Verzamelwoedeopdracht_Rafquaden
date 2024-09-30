@@ -80,6 +80,8 @@ namespace VerzamelingFinished.Controllers
         }
 
 
+
+
         public IActionResult Delete(int id)
         {
             var card = _context.cards.Find(id);

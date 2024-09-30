@@ -8,7 +8,7 @@ namespace VerzamelingFinished
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connection = "Data Source=.;Initial Catalog=Pokemoncards;Integrated Security=True;Trust Server Certificate=True;";
+            string connection = "Data Source=.;Initial Catalog=pokemonverzameling;Integrated Security=True;Trust Server Certificate=True;";
             optionsBuilder.UseSqlServer(connection);
         }
 
@@ -27,7 +27,8 @@ namespace VerzamelingFinished
                 Description = "An electric-type Pokémon",
                 Element = "Electric",
                 Price = 10,
-                Quantity = 1
+                Quantity = 1,
+                Image = "test"
             };
 
             modelBuilder.Entity<Card>().HasData(cardentity);

@@ -37,6 +37,9 @@ namespace VerzamelingFinished.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -58,6 +61,7 @@ namespace VerzamelingFinished.Migrations
                             Id = 1,
                             Description = "An electric-type Pokémon",
                             Element = "Electric",
+                            Image = "test",
                             Name = "Pikachu",
                             Price = 10,
                             Quantity = 1

@@ -5,7 +5,7 @@
 namespace VerzamelingFinished.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCardToDatabase : Migration
+    public partial class addpokemon : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,8 @@ namespace VerzamelingFinished.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Element = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -29,8 +30,8 @@ namespace VerzamelingFinished.Migrations
 
             migrationBuilder.InsertData(
                 table: "cards",
-                columns: new[] { "Id", "Description", "Element", "Name", "Price", "Quantity" },
-                values: new object[] { 1, "An electric-type Pokémon", "Electric", "Pikachu", 10, 1 });
+                columns: new[] { "Id", "Description", "Element", "Image", "Name", "Price", "Quantity" },
+                values: new object[] { 1, "An electric-type Pokémon", "Electric", "test", "Pikachu", 10, 1 });
         }
 
         /// <inheritdoc />

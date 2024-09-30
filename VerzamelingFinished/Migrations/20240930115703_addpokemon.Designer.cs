@@ -11,8 +11,8 @@ using VerzamelingFinished;
 namespace VerzamelingFinished.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    [Migration("20240917102840_AddCardToDatabase")]
-    partial class AddCardToDatabase
+    [Migration("20240930115703_addpokemon")]
+    partial class addpokemon
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,9 @@ namespace VerzamelingFinished.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -61,6 +64,7 @@ namespace VerzamelingFinished.Migrations
                             Id = 1,
                             Description = "An electric-type Pokémon",
                             Element = "Electric",
+                            Image = "test",
                             Name = "Pikachu",
                             Price = 10,
                             Quantity = 1
