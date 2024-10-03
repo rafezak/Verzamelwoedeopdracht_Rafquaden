@@ -29,7 +29,7 @@ namespace VerzamelingFinished.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DeckId")
+                    b.Property<int?>("DeckId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -38,6 +38,9 @@ namespace VerzamelingFinished.Migrations
 
                     b.Property<string>("Element")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -55,13 +58,12 @@ namespace VerzamelingFinished.Migrations
 
                     b.HasIndex("DeckId");
 
-                    b.ToTable("cards");
+                    b.ToTable("Cards", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            DeckId = 0,
                             Description = "An electric-type Pokémon",
                             Element = "Electric",
                             Name = "Pikachu",
@@ -78,6 +80,9 @@ namespace VerzamelingFinished.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CardCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -88,19 +93,21 @@ namespace VerzamelingFinished.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("decks");
+                    b.ToTable("Decks", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Description = "A deck full of electric-type Pokémon",
-                            Image = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2Felectric-energy-card-vector-symbol-by-biochao-on-deviantart--635852041162050260%2F&psig=AOvVaw1VhoMWHjxJd-1TAgrQrnv9&ust=1726831793197000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCICN3vLzzogDFQAAAAAdAAAAABAJ",
-                            Name = "Electric Deck"
+                            CardCount = 0,
+                            Description = "This is a sample deck",
+                            Image = "sample.jpg",
+                            Name = "Sample Deck"
                         });
                 });
 
@@ -109,8 +116,7 @@ namespace VerzamelingFinished.Migrations
                     b.HasOne("VerzamelingFinished.Models.Deck", "Deck")
                         .WithMany("Cards")
                         .HasForeignKey("DeckId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("FK_Cards_Deck");
 
                     b.Navigation("Deck");
                 });

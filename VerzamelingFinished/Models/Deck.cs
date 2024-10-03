@@ -6,6 +6,10 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
-        public List<Card> Cards { get; set; }
+        public virtual ICollection<Card> Cards { get; set; }
+
+        public int CardCount { get; set; }
+
+
     }
 }
