@@ -1,0 +1,85 @@
+﻿@model IEnumerable<VerzamelingFinished.Models.Deck>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@* <p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardCount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardCount)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table> *@
+
+
+
+<div class="card-container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-2">
+                <div class="card" style="background-image: url('https://preview.redd.it/t9ly7ltc9un81.png?auto=webp&s=9ea7f72591fc13ba78772f7e926e9763ef705675'); background-size: cover; opacity: 0.88;">
+                    <div class="card-header">
+                        <h5 class="card-title"><span style="color: white; text-shadow: 1px 1px 2px black; ">@Html.DisplayFor(modelItem => item.Name)  <img src="@item.Image" /> </span></h5>
+
+
+                    </div>
+                    <div class="card-body">
+
+                        <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Name: @Html.DisplayFor(modelItem => item.Name)</span></p>
+                        <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Descrtiption: @Html.DisplayFor(modelItem => item.Description)</span></p>
+                        <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Cardcount: @Html.DisplayFor(modelItem => item.CardCount)</span></p>
+                        <p class="card-text"><span style="opacity: 1; color: white; text-shadow: 1px 2px 2px black;">Click for details</span></p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-action="Details" asp-route-id="@item.Id">View</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+</div>

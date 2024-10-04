@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VerzamelingFinished.Models;
 
-namespace VerzamelingFinished
+namespace VerzamelingFinished.Controllers
 {
     public class CardsController : Controller
     {
@@ -53,7 +53,7 @@ namespace VerzamelingFinished
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Element,Price,Quantity")] Card card)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Element,Price,Quantity,Image")] Card card)
         {
             if (ModelState.IsValid)
             {
