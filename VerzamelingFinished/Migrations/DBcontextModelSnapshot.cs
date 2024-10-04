@@ -66,6 +66,7 @@ namespace VerzamelingFinished.Migrations
                             Id = 1,
                             Description = "An electric-type Pokémon",
                             Element = "Electric",
+                            Image = "test",
                             Name = "Pikachu",
                             Price = 10,
                             Quantity = 1

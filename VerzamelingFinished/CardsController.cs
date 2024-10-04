@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using VerzamelingFinished;
 using VerzamelingFinished.Models;
 
-namespace VerzamelingFinished.Controllers
+namespace VerzamelingFinished
 {
     public class CardsController : Controller
     {
