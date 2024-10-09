@@ -19,7 +19,7 @@ namespace VerzamelingFinished.Models;
         public string? Image { get; set; }
 
         public int? DeckId { get; set; }
-        public  virtual Deck? Deck { get; set; }
+        public  Deck? Deck { get; set; }
 
 
 

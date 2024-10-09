@@ -49,7 +49,7 @@ namespace VerzamelingFinished.Controllers
 
         public async Task<IActionResult> GetCoins(string name)
         {
-            Pokemon pokemon = null;
+            Card pokemon = null;
 
             // Check if a name was submitted
             if (!string.IsNullOrEmpty(name))

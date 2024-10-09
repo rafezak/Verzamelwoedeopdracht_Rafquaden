@@ -12,6 +12,9 @@ builder.Services.AddDbContext<IDBcontext, DBcontext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DBcontext")));
 
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 
 
 
@@ -20,6 +23,18 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DBcontext")));
 builder.Services.AddScoped<Pokeservice>();
 
 var app = builder.Build();
+
+
+app.UseCors("AllowAll");
+
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+     c.SwaggerEndpoint("/swagger/v1/swagger.json", "pokemonAPI"));
+
+}
 
 
 
@@ -38,7 +53,6 @@ using (var scope = app.Services.CreateScope())
     if (!app.Environment.IsDevelopment())
     {
         app.UseExceptionHandler("/Home/Error");
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
     }
 
@@ -54,3 +68,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+

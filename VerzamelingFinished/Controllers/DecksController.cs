@@ -21,27 +21,51 @@ namespace VerzamelingFinished.Controllers
         // GET: Decks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.decks.ToListAsync());
-        }
 
-        // GET: Decks/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var deck = await _context.decks
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(d => d.Cards) // Include the associated cards
+                .ToListAsync();
+
             if (deck == null)
             {
                 return NotFound();
             }
 
             return View(deck);
+
         }
 
+        public async Task<IActionResult> Addcards()
+        {
+            return View();
+        }
+
+
+        // GET: Decks/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            
+            
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var deck = await _context.decks
+                    .Include(d => d.Cards) // Include the associated cards
+                    .FirstOrDefaultAsync(d => d.Id == id);
+
+                if (deck == null)
+                {
+                    return NotFound();
+                }
+
+                return View(deck);
+        }
+
+
+          
         // GET: Decks/Create
         public IActionResult Create()
         {
@@ -152,5 +176,11 @@ namespace VerzamelingFinished.Controllers
         {
             return _context.decks.Any(e => e.Id == id);
         }
+
+
+       
     }
 }
+
+        
+

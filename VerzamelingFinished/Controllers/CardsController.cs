@@ -6,45 +6,89 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VerzamelingFinished.Models;
+using VerzamelingFinished.Services;
+
 
 namespace VerzamelingFinished.Controllers
 {
     public class CardsController : Controller
     {
-        private readonly DBcontext _context;
+        private readonly Pokeservice _pokemonService;
 
-        public CardsController(DBcontext context)
+        private readonly DBcontext _context;
+        public CardsController(DBcontext context, Pokeservice pokemonService)
         {
             _context = context;
+            _pokemonService = pokemonService;
         }
 
+
+
+        
         // GET: Cards
         public async Task<IActionResult> Index()
         {
-            return View(await _context.cards.ToListAsync());
+            return View(await _context.cards.Include(a => a.Deck).ToListAsync());
         }
 
         // GET: Cards/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
+        
+        
+            // Details by ID (for int)
+            [HttpGet("details/{id:int}")]
+            public async Task<IActionResult> Details(int? id)
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var card = await _context.cards
+
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (card == null)
+                {
+                
+                    return NotFound();
+                }
+
+                return View(card);
             }
 
-            var card = await _context.cards
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (card == null)
+            // Details by Name (for string)
+            
+            public async Task<IActionResult> Details(int id)
             {
-                return NotFound();
-            }
+                Card pokemon = null;
 
-            return View(card);
-        }
+                if (!string.IsNullOrEmpty(id.ToString()))
+                {
+                    var card = _context.cards.FirstOrDefaultAsync(m => m.Id == id);
+                // Call the service to fetch the Pokémon data dynamically
+                pokemon = await _pokemonService.GetPokemonByName(card.Result.Name);
+
+                    if (pokemon == null)
+                    {
+                        ViewBag.ErrorMessage = $"Could not find a Pokémon named '{card.Result.Name}'.";
+                    }
+                }
+
+                return View(pokemon);
+            }
+        
+
+
+
+
+
+
 
         // GET: Cards/Create
         public IActionResult Create()
         {
+            ViewData["DeckId"] = new SelectList(_context.decks, "Id", "Name");
+
+
             return View();
         }
 
@@ -53,14 +97,19 @@ namespace VerzamelingFinished.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Element,Price,Quantity,Image")] Card card)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Element,Price,Quantity,Image,DeckId")] Card card)
         {
             if (ModelState.IsValid)
+
             {
                 _context.Add(card);
+                
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DeckId"] = new SelectList(_context.decks, "Id", "Id", card.DeckId);
+
             return View(card);
         }
 
@@ -116,6 +165,9 @@ namespace VerzamelingFinished.Controllers
             return View(card);
         }
 
+      
+
+     
         // GET: Cards/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

@@ -13,7 +13,7 @@ namespace VerzamelingFinished.Services
             _httpClient = httpClient;
         }
 
-        public async Task<Pokemon> GetPokemonByName(string name)
+        public async Task<Card> GetPokemonByName(string name)
         {
             try
 
@@ -27,11 +27,11 @@ namespace VerzamelingFinished.Services
                     dynamic result = JsonConvert.DeserializeObject(content);
 
                     // Create a ViewModel to pass data to the view
-                    var pokemon = new Pokemon
+                    var pokemon = new Card
                     {
 
                         Name = result.name,
-                        image = result.sprites.front_default,
+                        Image = result.sprites.front_default,
 
 
                     };

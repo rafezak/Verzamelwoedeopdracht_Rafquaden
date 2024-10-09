@@ -1,4 +1,4 @@
-﻿@model IEnumerable<VerzamelingFinished.Models.Card>
+﻿ @model IEnumerable<VerzamelingFinished.Models.Card>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,8 +9,10 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+@*
 <table class="table">
-@*     <thead>
+    <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -26,6 +28,12 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeckId)
             </th>
             <th></th>
         </tr>
@@ -49,6 +57,12 @@
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deck.Name)
+            </td>
+            <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -56,8 +70,8 @@
         </tr>
 }
     </tbody>
-</table> *@
-
+</table>
+ *@
 
 
 
@@ -68,16 +82,16 @@
             <div class="col-md-2">
                 <div class="card" style="background-image: url('https://preview.redd.it/t9ly7ltc9un81.png?auto=webp&s=9ea7f72591fc13ba78772f7e926e9763ef705675'); background-size: cover; opacity: 0.88;">
                     <div class="card-header">
-                            <h5 class="card-title"><span style="color: white; text-shadow: 1px 1px 2px black; ">@Html.DisplayFor(modelItem => item.Name)  <img src="@item.Image" /> </span></h5>
-                        
+                        <h5 class="card-title"><span style="color: white; text-shadow: 1px 1px 2px black; ">@Html.DisplayFor(modelItem => item.Name)  <img src="@item.Image" /> </span></h5>
+
 
                     </div>
                     <div class="card-body">
-                       
+
                         <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Element: @Html.DisplayFor(modelItem => item.Element)</span></p>
                         <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Price: @Html.DisplayFor(modelItem => item.Price)</span></p>
                         <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Quantity: @Html.DisplayFor(modelItem => item.Quantity)</span></p>
-                            <p class="card-text"><span style="opacity: 1; color: white; text-shadow: 1px 2px 2px black;">Click for details</span></p>
+                        <p class="card-text"><span style="opacity: 1; color: white; text-shadow: 1px 2px 2px black;">Deck: @Html.DisplayFor(modelItem => item.Deck.Name)</span></p>
                     </div>
                     <div class="card-footer">
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -90,3 +104,4 @@
     </div>
 </div>
 </div>
+
