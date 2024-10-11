@@ -21,11 +21,9 @@ namespace VerzamelingFinished.Controllers
         // GET: Decks
         public async Task<IActionResult> Index()
         {
-
-
             var deck = await _context.decks
-                .Include(d => d.Cards) // Include the associated cards
-                .ToListAsync();
+                 .Include(d => d.Cards) // Include the associated cards
+                 .ToListAsync();
 
             if (deck == null)
             {
@@ -33,39 +31,28 @@ namespace VerzamelingFinished.Controllers
             }
 
             return View(deck);
-
         }
-
-        public async Task<IActionResult> Addcards()
-        {
-            return View();
-        }
-
 
         // GET: Decks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            
-            
-                if (id == null)
-                {
-                    return NotFound();
-                }
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-                var deck = await _context.decks
-                    .Include(d => d.Cards) // Include the associated cards
-                    .FirstOrDefaultAsync(d => d.Id == id);
+            var deck = await _context.decks
+                .Include(d => d.Cards) // Include the associated cards
+                .FirstOrDefaultAsync(d => d.Id == id);
 
-                if (deck == null)
-                {
-                    return NotFound();
-                }
+            if (deck == null)
+            {
+                return NotFound();
+            }
 
-                return View(deck);
+            return View(deck);
         }
 
-
-          
         // GET: Decks/Create
         public IActionResult Create()
         {
@@ -157,6 +144,38 @@ namespace VerzamelingFinished.Controllers
             return View(deck);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteCardFromDeck(int deckId, int cardId)
+        {
+            // Find the deck
+            var deck = await _context.decks
+                .Include(d => d.Cards) // Include the cards in the deck
+                .FirstOrDefaultAsync(d => d.Id == deckId);
+
+            if (deck == null)
+            {
+                return NotFound();
+            }
+
+            // Find the card to remove
+            var cardToRemove = deck.Cards.FirstOrDefault(c => c.Id == cardId);
+            if (cardToRemove == null)
+            {
+                return NotFound(); // if the card doesn't exist in the deck
+            }
+
+            // Remove the card from the deck
+            deck.Cards.Remove(cardToRemove);
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = deckId }); // Redirect to the deck details page
+        }
+
+
+
+
         // POST: Decks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -176,11 +195,5 @@ namespace VerzamelingFinished.Controllers
         {
             return _context.decks.Any(e => e.Id == id);
         }
-
-
-       
     }
 }
-
-        
-

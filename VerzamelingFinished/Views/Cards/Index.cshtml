@@ -1,4 +1,4 @@
-﻿ @model IEnumerable<VerzamelingFinished.Models.Card>
+﻿@model IEnumerable<VerzamelingFinished.Models.Card>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,68 +10,6 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-@*
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Element)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeckId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Element)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Deck.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
- *@
 
 
 
@@ -91,7 +29,7 @@
                         <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Element: @Html.DisplayFor(modelItem => item.Element)</span></p>
                         <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Price: @Html.DisplayFor(modelItem => item.Price)</span></p>
                         <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Quantity: @Html.DisplayFor(modelItem => item.Quantity)</span></p>
-                        <p class="card-text"><span style="opacity: 1; color: white; text-shadow: 1px 2px 2px black;">Deck: @Html.DisplayFor(modelItem => item.Deck.Name)</span></p>
+                        <p class="card-text"><span style="opacity: 1; color: white; text-shadow: 1px 2px 2px black;">Click for details</span></p>
                     </div>
                     <div class="card-footer">
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -103,5 +41,6 @@
         }
     </div>
 </div>
-</div>
+
+
 

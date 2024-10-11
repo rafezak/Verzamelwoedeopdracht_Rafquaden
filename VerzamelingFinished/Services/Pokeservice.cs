@@ -18,13 +18,13 @@ namespace VerzamelingFinished.Services
             try
 
             {
-                var url = $"https://pokeapi.co/api/v2/pokemon/{name.ToLower()}";
+                var url = $"https://pokeapi.co/api/v2/pokemon/{name.ToLower()}"; // Get the data from the API
                 var response = await _httpClient.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    dynamic result = JsonConvert.DeserializeObject(content);
+                    var content = await response.Content.ReadAsStringAsync(); // Read the content
+                    dynamic result = JsonConvert.DeserializeObject(content); // Deserialize the content
 
                     // Create a ViewModel to pass data to the view
                     var pokemon = new Card

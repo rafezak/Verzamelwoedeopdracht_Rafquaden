@@ -6,89 +6,55 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VerzamelingFinished.Models;
-using VerzamelingFinished.Services;
-
+using VerzamelingFinished.ViewModels;
 
 namespace VerzamelingFinished.Controllers
 {
     public class CardsController : Controller
     {
-        private readonly Pokeservice _pokemonService;
-
         private readonly DBcontext _context;
-        public CardsController(DBcontext context, Pokeservice pokemonService)
+
+        public CardsController(DBcontext context)
         {
             _context = context;
-            _pokemonService = pokemonService;
         }
 
-
-
-        
         // GET: Cards
         public async Task<IActionResult> Index()
         {
-            return View(await _context.cards.Include(a => a.Deck).ToListAsync());
+
+            return View(await _context.cards.Include(a => a.Decks).ToListAsync());
         }
 
         // GET: Cards/Details/5
-        
-        
-            // Details by ID (for int)
-            [HttpGet("details/{id:int}")]
-            public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                var card = await _context.cards
-
-                    .FirstOrDefaultAsync(m => m.Id == id);
-                if (card == null)
-                {
-                
-                    return NotFound();
-                }
-
-                return View(card);
+                return NotFound();
             }
 
-            // Details by Name (for string)
-            
-            public async Task<IActionResult> Details(int id)
+            var card = await _context.cards
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (card == null)
             {
-                Card pokemon = null;
-
-                if (!string.IsNullOrEmpty(id.ToString()))
-                {
-                    var card = _context.cards.FirstOrDefaultAsync(m => m.Id == id);
-                // Call the service to fetch the Pokémon data dynamically
-                pokemon = await _pokemonService.GetPokemonByName(card.Result.Name);
-
-                    if (pokemon == null)
-                    {
-                        ViewBag.ErrorMessage = $"Could not find a Pokémon named '{card.Result.Name}'.";
-                    }
-                }
-
-                return View(pokemon);
+                return NotFound();
             }
-        
 
-
-
-
-
-
+            return View(card);
+        }
 
         // GET: Cards/Create
         public IActionResult Create()
         {
-            ViewData["DeckId"] = new SelectList(_context.decks, "Id", "Name");
+            var decks = _context.decks.ToList();
 
+            ViewData["Decks"] = decks.Select(d => new SelectListItem
+            {
+                Value = d.Id.ToString(),
+                Text = d.Id.ToString()
 
+            }).ToList();
             return View();
         }
 
@@ -97,37 +63,56 @@ namespace VerzamelingFinished.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Element,Price,Quantity,Image,DeckId")] Card card)
+        public async Task<IActionResult> Create(Card card, int[] DeckIds)
         {
             if (ModelState.IsValid)
-
             {
-                _context.Add(card);
                 
-                await _context.SaveChangesAsync();
+                    // Fetch the selected decks from the database
+                    var selectedDecks = await _context.decks
+                        .Where(d => DeckIds.Contains(d.Id))
+                        .ToListAsync();
 
-                return RedirectToAction(nameof(Index));
+                    // Assign the selected decks to the card
+                    card.Decks = selectedDecks;
+
+                    // Add the new card to the database
+                    _context.cards.Add(card);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
             }
-            ViewData["DeckId"] = new SelectList(_context.decks, "Id", "Id", card.DeckId);
+
+            var decks = _context.decks.ToList();
+            ViewData["Decks"] = decks.Select(d => new SelectListItem
+            {
+                Value = d.Id.ToString(),
+                Text = d.Name
+            }).ToList();
 
             return View(card);
         }
 
+
         // GET: Cards/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var card = await _context.cards
+        .Include(c => c.Decks) // Include the decks associated with the card
+        .FirstOrDefaultAsync(c => c.Id == id);
 
-            var card = await _context.cards.FindAsync(id);
             if (card == null)
             {
                 return NotFound();
-
             }
-            return View(card);
+
+            // Set ViewData with the available decks
+            ViewData["AvailableDecks"] = await _context.decks.ToListAsync();
+
+            // Prepare selected deck IDs
+            ViewData["SelectedDeckIds"] = card.Decks.Select(d => d.Id).ToList();
+
+            return View(card); // Pass the card object to the view
         }
 
         // POST: Cards/Edit/5
@@ -135,39 +120,51 @@ namespace VerzamelingFinished.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Element,Price,Quantity")] Card card)
+        
+        public async Task<IActionResult> Edit(int id, string name, List<int> selectedDeckIds)
         {
-            if (id != card.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+                var card = await _context.cards
+                    .Include(c => c.Decks)
+                    .FirstOrDefaultAsync(c => c.Id == id);
+
+                if (card == null)
                 {
-                    _context.Update(card);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+
+                // Update card properties
+                card.Name = name;
+
+                // Clear existing deck associations
+                card.Decks.Clear();
+
+                // Add selected decks
+                if (selectedDeckIds != null)
                 {
-                    if (!CardExists(card.Id))
+                    foreach (var deckId in selectedDeckIds)
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        var deck = await _context.decks.FindAsync(deckId);
+                        if (deck != null)
+                        {
+                            card.Decks.Add(deck);
+                        }
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Details", new { id = card.Id });
             }
-            return View(card);
+
+            // If model state is invalid, set ViewData again
+            ViewData["AvailableDecks"] = await _context.decks.ToListAsync();
+            ViewData["SelectedDeckIds"] = selectedDeckIds;
+
+            return View(await _context.cards.FindAsync(id)); // Return the card to the view for corrections
         }
 
-      
 
-     
         // GET: Cards/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

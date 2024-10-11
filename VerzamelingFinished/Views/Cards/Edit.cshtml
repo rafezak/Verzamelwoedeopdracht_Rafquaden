@@ -43,11 +43,20 @@
                 <input asp-for="Image" class="form-control" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="DeckId" class="control-label"></label>
-                <select asp-for="DeckId" class="form-control" asp-items="ViewBag.DeckId"></select>
-                <span asp-validation-for="DeckId" class="text-danger"></span>
+
+
+            <div>
+        <label>Select Decks:</label>
+                @foreach (var deck in (List<VerzamelingFinished.Models.Deck>)ViewData["AvailableDecks"])  // Iterate through available decks using the AvailableDecks ViewData in the Cardcontroller
+        {
+            <div>
+                <input type="checkbox" name="selectedDeckIds" value="@deck.Id" @* makes checkboxes for each decks that are in the database *@
+                        @(((List<int>)ViewData["SelectedDeckIds"]).Contains(deck.Id) ? "checked" : "") /> @* applies the SelectedDeckIds Viewdata in the Cardcontroller to all checked Decks to apply edit changes *@
+                <label>@deck.Name</label> @* Display the decknames next to the checkboxes *@
             </div>
+        }
+    </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

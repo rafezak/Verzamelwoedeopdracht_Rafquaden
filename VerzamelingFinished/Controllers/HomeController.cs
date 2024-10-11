@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+ï»¿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using VerzamelingFinished.Models;
 using VerzamelingFinished.Services;
@@ -54,13 +54,13 @@ namespace VerzamelingFinished.Controllers
             // Check if a name was submitted
             if (!string.IsNullOrEmpty(name))
             {
-                // Call the service to fetch the Pokémon data dynamically
+                // Call the service to fetch the PokÃ©mon data dynamically
                 pokemon = await _pokemonService.GetPokemonByName(name);
 
-                // If no Pokémon was found, set an error message
+                // If no PokÃ©mon was found, set an error message
                 if (pokemon == null)
                 {
-                    ViewBag.ErrorMessage = $"Could not find a Pokémon named '{name}'.";
+                    ViewBag.ErrorMessage = $"Could not find a PokÃ©mon named '{name}'.";
                 }
             }
 
@@ -70,7 +70,7 @@ namespace VerzamelingFinished.Controllers
 
 
 
-            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
