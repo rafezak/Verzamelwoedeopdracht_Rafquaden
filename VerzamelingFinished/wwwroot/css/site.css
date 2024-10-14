@@ -20,3 +20,153 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Card Container and Layout */
+.card-container {
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.col-md-2 {
+    flex: 0 0 16.6666%; /* Equal column width */
+}
+
+/* Card Styling */
+.card {
+    background-image: url('https://preview.redd.it/t9ly7ltc9un81.png?auto=webp&s=9ea7f72591fc13ba78772f7e926e9763ef705675');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.88;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    height: 350px; /* Adjust height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    /* Card Hover Effect */
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+/* Card Header */
+.card-header {
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+}
+
+.card-title {
+    font-size: 1.2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-image {
+    width: 50px; /* Adjust image size */
+    height: auto;
+    border-radius: 50%; /* Circular images */
+}
+
+/* Card Body */
+.card-body {
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2); /* Semi-transparent background */
+    flex-grow: 1; /* Allow body to grow */
+}
+
+.card-text {
+    margin: 5px 0;
+}
+
+/* Card Footer */
+.card-footer {
+    padding: 10px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    font-size: 0.9em;
+}
+
+    .card-footer a {
+        color: #ffdd57; /* Highlight action links */
+        margin: 0 5px;
+        text-decoration: none;
+    }
+
+        .card-footer a:hover {
+            text-decoration: underline;
+        }
+
+/* Media Query for Responsive Design */
+@media (max-width: 768px) {
+    .col-md-2 {
+        flex: 0 0 100%; /* Stack cards on smaller screens */
+    }
+}
+
+
+
+/* Card Container and Layout */
+.card-container {
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.col-md-2 {
+    flex: 0 0 16.6666%; /* 1/6th width for each card */
+    max-width: 16.6666%;
+}
+
+/* Card Styling */
+.card {
+    background-image: url('https://preview.redd.it/t9ly7ltc9un81.png?auto=webp&s=9ea7f72591fc13ba78772f7e926e9763ef705675');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.88;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    height: 350px; /* Adjust as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+/* Card Hover Effect */
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Card Header */
+.card-header {
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+.card-title {
+    font-size: 1.2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-image {
+    width

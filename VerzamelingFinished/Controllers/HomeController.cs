@@ -17,23 +17,52 @@ namespace VerzamelingFinished.Controllers
 
         }
 
+        
         public IActionResult Index()
         {
+            // Check if the user is authenticated
+            if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+            {
+                // If not authenticated, redirect to the login page
+                return RedirectToAction("Login", "Account");
+            }
+
             return View();
         }
 
         public IActionResult Privacy()
         {
+            // Check if the user is authenticated
+            if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+            {
+                // If not authenticated, redirect to the login page
+                return RedirectToAction("Login", "Account");
+            }
+
             return View();
         }
 
         public IActionResult Mydecks()
         {
+            // Check if the user is authenticated
+            if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+            {
+                // If not authenticated, redirect to the login page
+                return RedirectToAction("Login", "Account");
+            }
+
             return View();
         }
 
         public IActionResult Cards()
         {
+            // Check if the user is authenticated
+            if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+            {
+                // If not authenticated, redirect to the login page
+                return RedirectToAction("Login", "Account");
+            }
+
             return View();
         }
 
@@ -49,6 +78,13 @@ namespace VerzamelingFinished.Controllers
 
         public async Task<IActionResult> GetCoins(string name)
         {
+
+            // Check if the user is authenticated
+            if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+            {
+                // If not authenticated, redirect to the login page
+                return RedirectToAction("Login", "Account");
+            }
             Card pokemon = null;
 
             // Check if a name was submitted

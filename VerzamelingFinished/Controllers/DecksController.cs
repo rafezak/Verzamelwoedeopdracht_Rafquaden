@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using VerzamelingFinished.Models;
 
@@ -19,18 +20,65 @@ namespace VerzamelingFinished.Controllers
         }
 
         // GET: Decks
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
+
+            // Check if the user is authenticated
+            if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+            {
+                // If not authenticated, redirect to the login page
+                return RedirectToAction("Login", "Account");
+            }
+
+
+
             var deck = await _context.decks
                  .Include(d => d.Cards) // Include the associated cards
                  .ToListAsync();
-
+            
+            
+               
+             
+          
             if (deck == null)
             {
                 return NotFound();
             }
 
-            return View(deck);
+            var decks = from d in  deck
+                        select d;
+
+                
+
+
+
+
+            switch (sortOrder)
+            {
+
+                case "id_asc":
+                    decks = decks.OrderBy(c => c.Id);
+                    break;
+                case "id_desc":
+                    decks = decks.OrderByDescending(c => c.Id);
+                    break;
+
+                case "name_asc":
+                    decks = decks.OrderBy(d => d.Name);
+                break;
+
+                case "name_desc":
+                    decks = decks.OrderByDescending(d => d.Name);
+                    break;
+                
+
+
+
+
+            }
+
+
+            return View(decks.ToList());
         }
 
         // GET: Decks/Details/5

@@ -10,6 +10,19 @@
     <a asp-action="Create">Create New</a>
 
 
+
+</p>
+
+<div class="sort-options">
+    <span>Sort by:</span>
+    <a asp-action="Index" asp-route-sortOrder="id_asc"> ID ↑</a> |
+    <a asp-action="Index" asp-route-sortOrder="id_desc"> ID ↓</a> |
+    <a asp-action="Index" asp-route-sortOrder="name_asc">Name A-Z</a> |
+    <a asp-action="Index" asp-route-sortOrder="name_desc">Name Z-A</a> 
+   
+ 
+</div>
+
 <div class="card-container">
     <div class="row">
         @foreach (var item in Model)

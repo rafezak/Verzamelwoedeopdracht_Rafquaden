@@ -13,6 +13,21 @@
 
 
 
+<div class="sort-options">
+    <span>Sort by:</span>
+    <a asp-action="Index" asp-route-sortOrder="id_asc"> ID ↑</a> |
+    <a asp-action="Index" asp-route-sortOrder="id_desc"> ID ↓</a> |
+    <a asp-action="Index" asp-route-sortOrder="id_desc">Name Z-A</a> |
+    <a asp-action="Index" asp-route-sortOrder="name_asc">Name A-Z</a> |
+    <a asp-action="Index" asp-route-sortOrder="name_desc">Name Z-A</a> |
+    <a asp-action="Index" asp-route-sortOrder="price_asc">Price ↑</a> |
+    <a asp-action="Index" asp-route-sortOrder="price_desc">Price ↓</a> |
+    <a asp-action="Index" asp-route-sortOrder="quantity_asc">Quantity ↑</a> |
+    <a asp-action="Index" asp-route-sortOrder="quantity_desc">Quantity ↓</a>
+    <a asp-action="Index" asp-route-sortOrder="element_asc">Element A-Z</a> |
+    <a asp-action="Index" asp-route-sortOrder="element_desc">Element Z-A</a>
+</div>
+
 <div class="card-container">
     <div class="row">
         @foreach (var item in Model)
@@ -21,11 +36,8 @@
                 <div class="card" style="background-image: url('https://preview.redd.it/t9ly7ltc9un81.png?auto=webp&s=9ea7f72591fc13ba78772f7e926e9763ef705675'); background-size: cover; opacity: 0.88;">
                     <div class="card-header">
                         <h5 class="card-title"><span style="color: white; text-shadow: 1px 1px 2px black; ">@Html.DisplayFor(modelItem => item.Name)  <img src="@item.Image" /> </span></h5>
-
-
                     </div>
                     <div class="card-body">
-
                         <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Element: @Html.DisplayFor(modelItem => item.Element)</span></p>
                         <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Price: @Html.DisplayFor(modelItem => item.Price)</span></p>
                         <p class="card-text"><span style="color: white; text-shadow: 1px 1px 2px black;">Quantity: @Html.DisplayFor(modelItem => item.Quantity)</span></p>
@@ -41,6 +53,7 @@
         }
     </div>
 </div>
+
 
 
 

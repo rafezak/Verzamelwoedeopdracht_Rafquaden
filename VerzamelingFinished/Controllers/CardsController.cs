@@ -20,11 +20,69 @@ namespace VerzamelingFinished.Controllers
         }
 
         // GET: Cards
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Index(string sortOrder)
         {
 
-            return View(await _context.cards.Include(a => a.Decks).ToListAsync());
+            // Check if the user is authenticated
+            if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+            {
+                // If not authenticated, redirect to the login page
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Fetch all cards from the database
+            var cards = from c in _context.cards
+                        select c;
+
+            // Apply sorting based on the sortOrder parameter
+            switch (sortOrder)
+            {
+
+                case "id_asc":
+                    cards = cards.OrderBy(c => c.Id);
+                    break;
+                case "id_desc":
+                    cards = cards.OrderByDescending(c => c.Id);
+                    break;
+                case "name_asc":
+                    cards = cards.OrderBy(c => c.Name);
+                    break;
+                case "name_desc":
+                    cards = cards.OrderByDescending(c => c.Name);
+                    break;
+                case "price_asc":
+                    cards = cards.OrderBy(c => c.Price);
+                    break;
+                case "price_desc":
+                    cards = cards.OrderByDescending(c => c.Price);
+                    break;
+                case "quantity_asc":
+                    cards = cards.OrderBy(c => c.Quantity);
+                    break;
+                case "quantity_desc":
+                    cards = cards.OrderByDescending(c => c.Quantity);
+                    break;
+                default:
+                    cards = cards.OrderBy(c => c.Name); // Default sorting
+                    break;
+
+                case "element_asc":
+                    cards = cards.OrderBy(c => c.Element);
+                    break;
+
+                case "element_desc":
+                    cards = cards.OrderByDescending(c => c.Element);
+                    break;
+
+
+            }
+
+            // Return the sorted list of cards to the view
+            return View(await cards.ToListAsync());
         }
+
+
 
         // GET: Cards/Details/5
         public async Task<IActionResult> Details(int? id)
